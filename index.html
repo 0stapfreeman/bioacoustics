@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Акустичний простір птахів (UMAP)</title>
-    <!-- Підключаємо Plotly.js через CDN -->
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
     <style>
         body { font-family: sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh; background: #111; color: white;}
@@ -18,17 +17,15 @@
 
     <div id="plot-container"></div>
     
-    <div id="player-panel">
+    <!-- <div id="player-panel">
         <h3 id="now-playing">🎧 Натисніть на точку, щоб прослухати запис</h3>
         <audio id="audio-player" controls></audio>
-    </div>
+    </div> -->
 
     <script>
-        // 1. Завантажуємо наші дані
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
-                // 2. Групуємо точки за видами птахів для легенди і кольорів
                 let traces = {};
                 
                 data.forEach(row => {
@@ -64,21 +61,19 @@
                     legend: { font: { color: 'white' } }
                 };
 
-                // 3. Малюємо графік
                 Plotly.newPlot('plot-container', plotData, layout);
 
-                // 4. Додаємо обробник кліків
-                document.getElementById('plot-container').on('plotly_click', function(eventData) {
-                    let point = eventData.points[0];
-                    let audioPath = point.customdata;
-                    let filename = point.text;
+                // document.getElementById('plot-container').on('plotly_click', function(eventData) {
+                //     let point = eventData.points[0];
+                //     let audioPath = point.customdata;
+                //     let filename = point.text;
                     
-                    // Оновлюємо текст і плеєр
-                    document.getElementById('now-playing').innerText = "Грає: " + filename;
-                    let player = document.getElementById('audio-player');
-                    player.src = audioPath;
-                    player.play().catch(e => console.log("Чекаємо взаємодії користувача для автовідтворення"));
-                });
+                //     // Оновлюємо текст і плеєр
+                //     document.getElementById('now-playing').innerText = "Грає: " + filename;
+                //     let player = document.getElementById('audio-player');
+                //     player.src = audioPath;
+                //     player.play().catch(e => console.log("Чекаємо взаємодії користувача для автовідтворення"));
+                // });
             });
     </script>
 </body>
